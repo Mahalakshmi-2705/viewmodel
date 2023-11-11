@@ -1,4 +1,4 @@
-package com.example.view
+package com.example.view.adapters
 
 import android.content.Context
 //for RecyclerView
@@ -18,15 +18,15 @@ import android.widget.TextView
 
 //For Resource
 import com.example.view.R
-import com.example.view.MainViewModel
-import com.example.NicePlace
+import com.example.view.viewmodels.MainViewModel
+import com.example.view.models.NicePlace
 
-class NoteRecyclerAdapter(val viewModel: MainViewModel, val arrayList: ArrayList<NicePlace>, val context: Context): RecyclerView.Adapter<RecyclerAdapter.NotesViewHolder>() {
+class RecyclerAdapter(val viewModel: MainViewModel, val arrayList: ArrayList<NicePlace>, val context: Context): RecyclerView.Adapter<RecyclerAdapter.NotesViewHolder>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
     ): RecyclerAdapter.NotesViewHolder {
-        var root = LayoutInflater.from(parent.context).inflate(R.layout.item,parent,false)
+        var root = LayoutInflater.from(parent.context).inflate(R.layout.item, parent, false)
         return NotesViewHolder(root)
     }
 
@@ -35,17 +35,17 @@ class NoteRecyclerAdapter(val viewModel: MainViewModel, val arrayList: ArrayList
     }
 
     override fun getItemCount(): Int {
-        if(arrayList.size==0){
-            Toast.makeText(context,"List is empty",Toast.LENGTH_LONG).show()
-        }else{
+        if (arrayList.size == 0) {
+            Toast.makeText(context, "List is empty", Toast.LENGTH_LONG).show()
+        } else {
 
         }
         return arrayList.size
     }
 
 
-    inner  class NotesViewHolder(private val binding: View) : RecyclerView.ViewHolder(binding) {
-        fun bind(blog: NicePlace){
+    inner class NotesViewHolder(private val binding: View) : RecyclerView.ViewHolder(binding) {
+        fun bind(blog: NicePlace) {
             binding.findViewById<TextView>(R.id.title).text = blog.title
             binding.findViewById<ImageButton>(R.id.delete).setOnClickListener {
                 viewModel.remove(blog)

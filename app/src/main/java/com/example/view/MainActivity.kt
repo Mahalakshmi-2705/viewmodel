@@ -2,13 +2,19 @@ package com.example.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.widget.Button
 import android.widget.EditText
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.lifecycle.ViewModelProvider
+//For resource
+import com.example.view.viewmodels.MainViewModel
+import com.example.view.viewmodels.MainViewModelFactory
+import com.example.view.models.NicePlace
+import com.example.view.adapters.RecyclerAdapter
 
 class MainActivity : AppCompatActivity() {
     private var viewManager = LinearLayoutManager(this)
@@ -21,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         mainrecycler = findViewById(R.id.recycler)
         val application = requireNotNull(this).application
         val factory = MainViewModelFactory()
-        viewModel = ViewModelProviders(this).get(MainViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         but = findViewById(R.id.button)
         but.setOnClickListener {
             addData()
@@ -37,7 +43,7 @@ class MainActivity : AppCompatActivity() {
     fun observeData(){
         viewModel.lst.observe(this, Observer{
             Log.i("data",it.toString())
-            mainrecycler.adapter= NoteRecyclerAdapter(viewModel, it, this)
+            mainrecycler.adapter= RecyclerAdapter(viewModel, it, this)
         })
     }
 
@@ -48,7 +54,7 @@ class MainActivity : AppCompatActivity() {
         if(title.isNullOrBlank()){
             Toast.makeText(this,"Enter value!",Toast.LENGTH_LONG).show()
         }else{
-            var blog= Blog(title)
+            var blog= NicePlace(title, "ff")
             viewModel.add(blog)
             txtplce.text.clear()
             mainrecycler.adapter?.notifyDataSetChanged()

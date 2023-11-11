@@ -1,11 +1,8 @@
-package com.example.view
-
-import androidx.lifecycle.MutableLiveData
+package com.example.view.viewmodels
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.MutableLiveData
 
-
-
-import com.example.view.NicePlace
+import com.example.view.models.NicePlace
 
 class MainViewModel: ViewModel() {
     var lst = MutableLiveData<ArrayList<NicePlace>>()
